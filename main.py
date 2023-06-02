@@ -105,12 +105,7 @@ class Game():
         visionScore = self.match['info']['participants'][participant_index]['visionScore']
         
         return visionScore
-    
-    def get_kda(self):
-        kda = (self.get_kills() + self.get_assists / self.get_deaths)
 
-        return kda
-    
     def get_gameMode (self):
         
         mode = self.match['info']['gameMode']
@@ -204,8 +199,9 @@ for i in range(len(active_history)):
     print("---- ---- ---- ----\n")
 
     time.sleep(1)
-#display match facts over 20 games     
-print( f"Over 20 Games: \n Total Deaths: {player_total_deaths} \n Total Kills: {player_total_kills} KD/A Ratio: {active_game.get_kda}"
+#display match facts over 20 games  
+kda = (player_total_kills/player_total_deaths)   
+print( f"Over 20 Games: \n  Total Deaths: {player_total_deaths}\n  Total Kills: {player_total_kills}\n  KD/A Ratio: {kda}"
 )
 
 
