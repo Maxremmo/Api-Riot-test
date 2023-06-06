@@ -3,7 +3,7 @@ import time
 from dotenv import load_dotenv
 load_dotenv()
 import os
-
+import pandas as pd
 
 api_key = os.getenv('the_key')  #Development API key for Riot API, expires every 24h
 
@@ -154,6 +154,9 @@ player_total_vision_score = 0
 player_wins = 0
 player_losses = 0
 
+
+current_game = active_account.get_match(active_history[0])
+
 #loop over games, each time getting match data and participant index to track player,
 #display Game type, Role, Champion, Kills/Deaths/Assists/ Wins and Loss, Multikills, Takedowns and Vision score
 for i in range(len(active_history)):
@@ -163,6 +166,13 @@ for i in range(len(active_history)):
     participant_index = active_account.get_participant_index(current_game)
 
     active_game = Game(current_game)
+
+    df = current_game['info']['participants'][participant_index]
+    my_data = pd.DataFrame(df)
+    file_name = f"/Users/maxremme/Desktop/Programming/Riot/games/game_{i}.csv"
+    my_data.to_csv(file_name)
+
+    
 
     player_won = active_game.get_win()
     
@@ -202,6 +212,7 @@ print(
     f"Total Kills: {player_total_kills}\n"  
     f"KD/A Ratio: {kda}"
 )
+
 
 
         
