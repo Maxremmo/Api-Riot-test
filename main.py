@@ -7,6 +7,8 @@ import os
 #Development API key for Riot API, expires every 24h
 api_key = os.getenv('the_key')
 
+
+
 #Create Class (Account)
 class Summoner:
 
@@ -153,15 +155,7 @@ for i in range(len(active_history)):
     participant_index = active_account.get_participant_index(current_game)
 
     active_game = Game(current_game)
-    
-    print(f"GAME {i} : {active_game.get_gameMode()}")
-    
-    print(f"Role:  {active_game.get_role()}")
 
-    print(f"Champion played: {active_game.get_championName()}")
-
-    print(f"KDA: {active_game.get_kills()}/{active_game.get_deaths()}/{active_game.get_assists()}")
-    
     player_won = active_game.get_win()
     
     if player_won == True:
@@ -169,39 +163,35 @@ for i in range(len(active_history)):
         
     else:
         player_losses += 1
-    
-    print(f"Wins : {player_wins}")
-    
-    print(f"Losses : {player_losses}")
-    
-    print(f"Game won:{active_game.get_win()} ")
-    
+
     kills = active_game.get_kills()
-    
     player_total_kills = player_total_kills + kills
-    
     deaths = active_game.get_deaths()
-    
     player_total_deaths = player_total_deaths + deaths
-    
-    multikills = active_game.get_multikills()
-    
-    print(f"Multikills: {active_game.get_multikills()}" )
-    
-    takedowns = active_game.get_takedowns()
 
-    print(f"Takedowns: {active_game.get_takedowns()}" )
-    
-    vision_score = active_game.get_visionScore()
-    
-    print(f"Vision Score: {active_game.get_visionScore()} " )
+    print(
+        f"GAME {i} : {active_game.get_gameMode()}\n" 
+        f"Role:  {active_game.get_role()}\n"
+        f"Champion played: {active_game.get_championName()}\n"
+        f"KDA: {active_game.get_kills()}/{active_game.get_deaths()}/{active_game.get_assists()}\n"
+        f"Wins : {player_wins}\n"
+        f"Losses : {player_losses}\n"
+        f"Game won:{active_game.get_win()} \n"
+        f"Multikills: {active_game.get_multikills()}\n"
+        f"Takedowns: {active_game.get_takedowns()}\n"
+        f"Vision Score: {active_game.get_visionScore()}\n"
+        f"Takedowns: {active_game.get_takedowns()}\n"
+        f"---- ---- ---- ----\n"
+)
 
-    print("---- ---- ---- ----\n")
-
-    time.sleep(1)
+    time.sleep(0.5)
 #display match facts over 20 games  
 kda = (player_total_kills/player_total_deaths)   
-print( f"Over 20 Games: \n  Total Deaths: {player_total_deaths}\n  Total Kills: {player_total_kills}\n  KD/A Ratio: {kda}"
+print(
+    f"Over 20 Games: \n"  
+    f"Total Deaths: {player_total_deaths}\n"  
+    f"Total Kills: {player_total_kills}\n"  
+    f"KD/A Ratio: {kda}"
 )
 
 
