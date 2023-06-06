@@ -4,129 +4,138 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
-#Development API key for Riot API, expires every 24h
-api_key = os.getenv('the_key')
 
+api_key = os.getenv('the_key')  #Development API key for Riot API, expires every 24h
 
-
-#Create Class (Account)
-class Summoner:
-
-    #User defines class name + puuid function is called and retrieved from account information
+class Summoner:  #Create Class (Account)
     def __init__(self, api_key):
+        """User defines class name + puuid function is called and retrieved from account information
+            requires an api key as input
+        """ 
+
         self.api_key = api_key
         self.name = input("Enter Account Name: ")
         self.puuid = self.get_puuid()
 
-        
-    #puuid needed to get match history 
     def get_puuid(self):
+        """Returns puuid needed to get match history"""
+
         api_url = ("https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/" + self.name) 
-        full_url = (
-        api_url + "?api_key=" + self.api_key
-           
-             ) 
+        full_url = (api_url + "?api_key=" + self.api_key) 
         resp = requests.get(full_url)
-
         account_info = resp.json()
-
         puuid = account_info['puuid']
 
         return puuid
 
-    #get all information about one individual match
     def get_match(self, match_iD):
-        my_url = ("https://europe.api.riotgames.com/lol/match/v5/matches/" +
-                  
-                  match_iD +
+        """Returns  information about one individual match, input is a matchID"""
 
-                  "?api_key=" + api_key)
+        my_url = ("https://europe.api.riotgames.com/lol/match/v5/matches/" +
+                  match_iD +
+                  "?api_key=" + api_key
+                  )
         
         match_request = requests.get(my_url)
         match_facts = match_request.json()
         return match_facts
     
-    #get history of chosen amount of matches
     def get_history(self):
-        history_url = ("https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/" + 
-                  self.puuid + 
-                  "/ids?start=0&count=20" + 
-                  "&api_key=" + 
-                  api_key
-                  )
+        """Returns history of chosen amount of matches
+        """
+
+        history_url = (
+            "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/" + 
+            self.puuid + 
+            "/ids?start=0&count=20" + 
+            "&api_key=" + 
+            api_key
+            )
         
         history_request = requests.get(history_url)
         match_history = history_request.json()
+        
         return match_history
     
-    #participant index differs for every game, needed to keep track of only the chosen accounts data
     def get_participant_index(self, match):
+        """ Returns participant index which differs for every game, 
+            needed to keep track of only the chosen accounts data
+        """
 
         participant_index = match['metadata']['participants'].index(self.puuid)
     
         return participant_index
     
 class Game():
-
     def __init__(self, match):
         self.match = match
         
         
     def get_kills(self):
+        """Returns number of Kills"""
 
         kills = self.match['info']['participants'][participant_index]['kills']
         
         return kills
     
     def get_deaths(self):
+        """Returns number of deaths"""
         
         deaths = self.match['info']['participants'][participant_index]['deaths']
         
         return deaths
     
     def get_assists(self):
+        """Returns number of assists"""
         
         assists = self.match['info']['participants'][participant_index]['assists']
         
         return assists
     
     def get_takedowns(self):
+        """Returns number of takedowns"""
         
         takedowns = self.match['info']['participants'][participant_index]['challenges']['takedowns']
         
         return takedowns
     
     def get_multikills(self):
+        """Returns number of multikills"""
         
         multikills = self.match['info']['participants'][participant_index]['challenges']['multikills']
         
         return multikills
     
     def get_visionScore(self):
+        """Returns visionscore"""
         
         visionScore = self.match['info']['participants'][participant_index]['visionScore']
         
         return visionScore
 
     def get_gameMode (self):
+        """Returns game mode"""
         
         mode = self.match['info']['gameMode']
 
         return mode
     
     def get_championName (self):
+        """Returns name of champion played"""
         
         champName = self.match['info']['participants'][participant_index]['championName']
 
         return champName
     
     def get_role (self):
+        """Returns role"""
         
         role = self.match['info']['participants'][participant_index]['individualPosition']
 
         return role
     
     def get_win (self):
+        """ Returns whether the game was won or not"""
         
         won = self.match['info']['participants'][participant_index]['win']
 
@@ -137,7 +146,6 @@ active_account = Summoner(api_key)
 active_history = active_account.get_history()
 
 #initialize counters (will clean this up)
-
 player_total_kills = 0
 player_total_deaths = 0
 player_multikills = 0
@@ -185,6 +193,7 @@ for i in range(len(active_history)):
 )
 
     time.sleep(0.5)
+    
 #display match facts over 20 games  
 kda = (player_total_kills/player_total_deaths)   
 print(
@@ -193,5 +202,10 @@ print(
     f"Total Kills: {player_total_kills}\n"  
     f"KD/A Ratio: {kda}"
 )
+
+
+        
+
+
 
 
