@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 import pandas as pd
+import json
 
 api_key = os.getenv('the_key')  #Development API key for Riot API, expires every 24h
 
@@ -167,10 +168,17 @@ for i in range(len(active_history)):
 
     active_game = Game(current_game)
 
+
+
     df = current_game['info']['participants'][participant_index]
-    my_data = pd.DataFrame(df)
-    file_name = f"/Users/maxremme/Desktop/Programming/Riot/games/game_{i}.csv"
-    my_data.to_csv(file_name)
+    file_name = f"/Users/maxremme/Desktop/Programming/Riot/games/game_{i}.json"
+
+    with open(file_name, 'w', encoding='utf-8') as file:
+        json.dump(df, file, ensure_ascii=False, indent=4)
+
+    #my_data = pd.DataFrame(df)
+    #file_name = f"/Users/maxremme/Desktop/Programming/Riot/games/game_{i}.csv"
+    #my_data.to_csv(file_name)
 
     
 
