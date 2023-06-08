@@ -170,7 +170,12 @@ for i in range(len(active_history)):
 
     df = current_game['info']['participants'][participant_index]
     
-    file_name = f"/Users/maxremme/Desktop/Programming/Riot/games/game_{i}.json"
+    file_name = f"/Users/maxremme/Desktop/Programming/Riot/full_games/game_{i}.json"
+
+    with open(file_name, 'w', encoding='utf-8') as file:
+        json.dump(current_game, file, ensure_ascii=False, indent=4)
+        
+    file_name = f"/Users/maxremme/Desktop/Programming/Riot/player_stats/game_{i}.json"
 
     with open(file_name, 'w', encoding='utf-8') as file:
         json.dump(df, file, ensure_ascii=False, indent=4)
