@@ -168,19 +168,12 @@ for i in range(len(active_history)):
 
     active_game = Game(current_game)
 
-
-
     df = current_game['info']['participants'][participant_index]
+    
     file_name = f"/Users/maxremme/Desktop/Programming/Riot/games/game_{i}.json"
 
     with open(file_name, 'w', encoding='utf-8') as file:
         json.dump(df, file, ensure_ascii=False, indent=4)
-
-    #my_data = pd.DataFrame(df)
-    #file_name = f"/Users/maxremme/Desktop/Programming/Riot/games/game_{i}.csv"
-    #my_data.to_csv(file_name)
-
-    
 
     player_won = active_game.get_win()
     
