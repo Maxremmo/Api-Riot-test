@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_lottie import st_lottie
 import requests
+import pandas as pd
 
 st.set_page_config(page_title="My Webpage", page_icon=":sparkles:", layout="wide")
 
@@ -42,7 +43,7 @@ with st.container():
     left_column, right_column = st.columns(2)
     with left_column: 
         st.header("Step into a world where data becomes your most valuable ally.")
-        st.write()
+        st.write(pd.read_csv('/Users/maxremme/Desktop/Programming/Code_Academy/Riot/player_stats/game_1.csv'))
         st.write("##")
         st.write(
             """
