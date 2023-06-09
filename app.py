@@ -41,27 +41,18 @@ with st.container():
     st.write("---")
     left_column, right_column = st.columns(2)
     with left_column: 
-        st.header("What You Will Get!")
+        st.header("Step into a world where data becomes your most valuable ally.")
         st.write()
         st.write("##")
         st.write(
             """
-            Uncover the secrets to your success, identify your strengths, 
+            _Uncover the secrets to your success, identify your strengths, 
             and pinpoint areas for growth. Dive deep into your match history, 
             relive epic battles, and dissect pivotal moments that turned the tides of victory. 
-            Unearth the patterns, strategies, and champion synergies that set you apart from the rest.
+            Unearth the patterns, strategies, and champion synergies that set you apart from the rest_.
             """
         )
-        st.write(
-            """
-            Most recent 20 Matches analysed using in depth statistical analysis on:
-            - Kills
-            - Deaths
-            - Vision Score
-            - etc  
-            """
-        )
-
+        
     with right_column:
         st_lottie(lottie_coding, height=500, key='coding')
 

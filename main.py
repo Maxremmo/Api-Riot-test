@@ -200,7 +200,7 @@ for i in range(len(active_history)):
         f"KDA: {active_game.get_kills()}/{active_game.get_deaths()}/{active_game.get_assists()}\n"
         f"Wins : {player_wins}\n"
         f"Losses : {player_losses}\n"
-        f"Game won:{active_game.get_win()} \n"
+        f"Game won :{active_game.get_win()} \n"
         f"Multikills: {active_game.get_multikills()}\n"
         f"Takedowns: {active_game.get_takedowns()}\n"
         f"Vision Score: {active_game.get_visionScore()}\n"
