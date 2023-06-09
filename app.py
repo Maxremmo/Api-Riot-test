@@ -24,9 +24,17 @@ lottie_coding = load_url("https://assets9.lottiefiles.com/packages/lf20_8rs5Fb08
 #Header Section
 with st.container():
 
-    st.subheader("Get insights and statistics on your performance")
-    st.title("Look up Your Gaming History")
-    st.write("Imagine having an all-seeing eye that reveals every move, every decision, and every opportunity for improvement from your recent matches. With League Insights, you gain access to a treasure trove of detailed statistics, strategic analysis, and personalized recommendations, tailored exclusively to your gameplay style.")
+    st.subheader("Look Up Your Gaming History")
+    st.title("Get insights and statistics on your performance!")
+
+    st.write(
+        """
+        Imagine having an all-seeing eye that reveals every move, every decision, 
+    and every opportunity for improvement from your recent matches. With League Insights, 
+    you gain access to a treasure trove of detailed statistics, strategic analysis, 
+    and personalized recommendations, tailored exclusively to your gameplay style.
+    """
+    )
 
 
 with st.container():
@@ -36,6 +44,14 @@ with st.container():
         st.header("What You Will Get!")
         st.write()
         st.write("##")
+        st.write(
+            """
+            Uncover the secrets to your success, identify your strengths, 
+            and pinpoint areas for growth. Dive deep into your match history, 
+            relive epic battles, and dissect pivotal moments that turned the tides of victory. 
+            Unearth the patterns, strategies, and champion synergies that set you apart from the rest.
+            """
+        )
         st.write(
             """
             Most recent 20 Matches analysed using in depth statistical analysis on:
