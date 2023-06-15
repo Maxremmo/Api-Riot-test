@@ -17,7 +17,7 @@ def load_url(url):
 
 #Load Assets
 
-lottie_coding = load_url("https://assets9.lottiefiles.com/packages/lf20_8rs5Fb08t9.json")
+lottie_coding = load_url("https://assets8.lottiefiles.com/packages/lf20_r2rsf2yk.json")
 #https://assets10.lottiefiles.com/packages/lf20_dews3j6m.json
 #https://assets8.lottiefiles.com/packages/lf20_r2rsf2yk.json
 #https://assets9.lottiefiles.com/packages/lf20_8rs5Fb08t9.json
@@ -25,7 +25,6 @@ lottie_coding = load_url("https://assets9.lottiefiles.com/packages/lf20_8rs5Fb08
 #Header Section
 with st.container():
 
-    st.subheader("Look Up Your Gaming History")
     st.title("Get insights and statistics on your performance!")
 
     st.write(
@@ -37,13 +36,13 @@ with st.container():
     """
     )
 
-
+df = pd.read_csv('/Users/maxremme/Desktop/Programming/Code_Academy/Riot/player_stats/game_1.csv')
 with st.container():
     st.write("---")
     left_column, right_column = st.columns(2)
     with left_column: 
         st.header("Step into a world where data becomes your most valuable ally.")
-        st.write(pd.read_csv('/Users/maxremme/Desktop/Programming/Code_Academy/Riot/player_stats/game_1.csv'))
+        st.dataframe(df.style.highlight_max(color= 'red', axis=0), width= 1000)
         st.write("##")
         st.write(
             """
@@ -55,5 +54,5 @@ with st.container():
         )
         
     with right_column:
-        st_lottie(lottie_coding, height=500, key='coding')
+        st_lottie(lottie_coding, height=400, key='coding')
 
