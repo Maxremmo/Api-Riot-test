@@ -2,6 +2,18 @@ import streamlit as st
 from streamlit_lottie import st_lottie
 import requests
 import pandas as pd
+from dotenv import load_dotenv
+import os
+load_dotenv()
+from main import Summoner, Game
+from main import run_stats, stats_to_df
+import json
+import time
+import subprocess
+
+
+api_key = os.getenv('the_key')
+
 
 st.set_page_config(page_title="My Webpage", page_icon=":sparkles:", layout="wide")
 
@@ -11,8 +23,17 @@ def load_url(url):
         return None
     return resp.json()
 
+def main():
+    st.title("Enter your Username")
 
+    # Create a text input field for the username
+    username = st.text_input("Enter your account ")
 
+    # Display the entered name
+    st.write(f"Entered name: {username}")
+
+if __name__ == "__main__":
+    main()
 
 
 #Load Assets
@@ -35,6 +56,7 @@ with st.container():
     and personalized recommendations, tailored exclusively to your gameplay style.
     """
     )
+
 
 df = pd.read_csv('/Users/maxremme/Desktop/Programming/Code_Academy/Riot/player_stats/game_1.csv')
 with st.container():
