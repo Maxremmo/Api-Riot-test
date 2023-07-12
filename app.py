@@ -1,6 +1,19 @@
 import streamlit as st
 from streamlit_lottie import st_lottie
 import requests
+import pandas as pd
+from dotenv import load_dotenv
+import os
+load_dotenv()
+from main import Summoner, Game
+from main import run_stats, stats_to_df
+import json
+import time
+import subprocess
+
+
+api_key = os.getenv('the_key')
+
 
 st.set_page_config(page_title="My Webpage", page_icon=":sparkles:", layout="wide")
 
@@ -10,13 +23,22 @@ def load_url(url):
         return None
     return resp.json()
 
+def main():
+    st.title("Enter your Username")
 
+    # Create a text input field for the username
+    username = st.text_input("Enter your account ")
 
+    # Display the entered name
+    st.write(f"Entered name: {username}")
+
+if __name__ == "__main__":
+    main()
 
 
 #Load Assets
 
-lottie_coding = load_url("https://assets9.lottiefiles.com/packages/lf20_8rs5Fb08t9.json")
+lottie_coding = load_url("https://assets8.lottiefiles.com/packages/lf20_r2rsf2yk.json")
 #https://assets10.lottiefiles.com/packages/lf20_dews3j6m.json
 #https://assets8.lottiefiles.com/packages/lf20_r2rsf2yk.json
 #https://assets9.lottiefiles.com/packages/lf20_8rs5Fb08t9.json
@@ -24,7 +46,6 @@ lottie_coding = load_url("https://assets9.lottiefiles.com/packages/lf20_8rs5Fb08
 #Header Section
 with st.container():
 
-    st.subheader("Look Up Your Gaming History")
     st.title("Get insights and statistics on your performance!")
 
     st.write(
@@ -37,12 +58,13 @@ with st.container():
     )
 
 
+df = pd.read_csv('/Users/maxremme/Desktop/Programming/Code_Academy/Riot/player_stats/game_1.csv')
 with st.container():
     st.write("---")
     left_column, right_column = st.columns(2)
     with left_column: 
         st.header("Step into a world where data becomes your most valuable ally.")
-        st.write()
+        st.dataframe(df.style.highlight_max(color= 'red', axis=0), width= 1000)
         st.write("##")
         st.write(
             """
@@ -54,5 +76,5 @@ with st.container():
         )
         
     with right_column:
-        st_lottie(lottie_coding, height=500, key='coding')
+        st_lottie(lottie_coding, height=400, key='coding')
 
