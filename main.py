@@ -261,5 +261,4 @@ def run_stats():
         f"Total Kills: {player_total_kills}\n"  
         f"KD/A Ratio: {kda}"
     )
-run_stats()
     
