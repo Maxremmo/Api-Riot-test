@@ -5,7 +5,6 @@ load_dotenv()
 import os
 import pandas as pd
 import json
-
 api_key = os.getenv('the_key')  #Development API key for Riot API, expires every 24h
 
 class Summoner:  #Create Class (Account)
@@ -185,9 +184,9 @@ def stats_to_df(username):
     return very_final_df
 
 
-def run_stats(username):
+def run_stats():
     #initalize account 
-    active_account = Summoner(api_key, username)
+    active_account = Summoner(api_key, input("Account Name: "))
     active_history = active_account.get_history()
 
     #initialize counters (will clean this up)
@@ -262,4 +261,5 @@ def run_stats(username):
         f"Total Kills: {player_total_kills}\n"  
         f"KD/A Ratio: {kda}"
     )
-
+run_stats()
+    
