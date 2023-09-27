@@ -300,6 +300,10 @@ def run_stats():
         f"Total Kills: {player_total_kills}\n"
         f"KD/A Ratio: {kda}"
     )
+<<<<<<< HEAD
 
 
 run_stats()
+=======
+    
+>>>>>>> b2ba1bee4fa674d4959dfdfade151de9af0f0ec3
