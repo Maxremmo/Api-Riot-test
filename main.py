@@ -1,12 +1,11 @@
 import requests
 import time
 from dotenv import load_dotenv
-
-load_dotenv()
 import os
 import pandas as pd
 import json
 
+load_dotenv()
 API_KEY = os.getenv("MY_API")  # Development API key for Riot API, expires every 24h
 
 
@@ -300,10 +299,6 @@ def run_stats():
         f"Total Kills: {player_total_kills}\n"
         f"KD/A Ratio: {kda}"
     )
-<<<<<<< HEAD
 
 
 run_stats()
-=======
-    
->>>>>>> b2ba1bee4fa674d4959dfdfade151de9af0f0ec3
