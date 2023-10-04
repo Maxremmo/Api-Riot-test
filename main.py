@@ -397,7 +397,6 @@ def stats_to_df(username):
             "challenges.teamDamagePercentage",
             "challenges.teamElderDragonKills",
             "challenges.teamRiftHeraldKills",
-            "challenges.thirdInhibitorDestroyedTime",
             "challenges.tookLargeDamageSurvived",
             "challenges.turretPlatesTaken",
             "challenges.turretTakedowns",
@@ -405,23 +404,16 @@ def stats_to_df(username):
             "challenges.visionScorePerMinute",
             "challenges.wardTakedowns",
             "challenges.highestChampionDamage",
-            "challenges.hadAfkTeammate",
         ]
     ]
     final_df["timePlayed"] = round((final_df["timePlayed"] / 60), 2)
-    final_df["challenges.hadAfkTeammate"] = final_df[
-        "challenges.hadAfkTeammate"
-    ].fillna(False)
-    final_df["challenges.hadAfkTeammate"] = final_df[
-        "challenges.hadAfkTeammate"
-    ].replace(1.0, True)
     final_df["teamId"] = final_df["teamId"].apply(
         lambda x: "Blue" if x == 100 else "Red"
     )
     current_time = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     very_final_df = final_df.set_index("game_id")
-    very_final_df.to_csv(f"data/last20/last20games_{username}_{current_time}")
+    very_final_df.to_csv(f"data/last20/last20games_{username}_{current_time}.csv")
     return very_final_df
 
 
