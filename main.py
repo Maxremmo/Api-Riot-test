@@ -353,7 +353,6 @@ def stats_to_df(username):
             "challenges.killAfterHiddenWithAlly",
             "challenges.killParticipation",
             "challenges.killedChampTookFullTeamDamageSurvived",
-            "challenges.killingSprees",
             "challenges.killsNearEnemyTurret",
             "challenges.killsOnOtherLanesEarlyJungleAsLaner",
             "challenges.killsUnderOwnTurret",
@@ -399,7 +398,6 @@ def stats_to_df(username):
             "challenges.teamRiftHeraldKills",
             "challenges.tookLargeDamageSurvived",
             "challenges.turretPlatesTaken",
-            "challenges.turretTakedowns",
             "challenges.turretsTakenWithRiftHerald",
             "challenges.visionScorePerMinute",
             "challenges.wardTakedowns",
@@ -410,10 +408,12 @@ def stats_to_df(username):
     final_df["teamId"] = final_df["teamId"].apply(
         lambda x: "Blue" if x == 100 else "Red"
     )
-    current_time = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    current_time = dt.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    final_df.columns = final_df.columns.str.replace("challenges.", "")
 
     very_final_df = final_df.set_index("game_id")
-    very_final_df.to_csv(f"data/last20/last20games_{username}_{current_time}.csv")
+    save_name = f"data/last20/last20games_{username}_{current_time}.csv"
+    very_final_df.to_csv(save_name)
     return very_final_df
 
 
