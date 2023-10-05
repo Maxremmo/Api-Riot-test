@@ -401,7 +401,6 @@ def stats_to_df(username):
             "challenges.turretsTakenWithRiftHerald",
             "challenges.visionScorePerMinute",
             "challenges.wardTakedowns",
-            "challenges.highestChampionDamage",
         ]
     ]
     final_df["timePlayed"] = round((final_df["timePlayed"] / 60), 2)
@@ -417,9 +416,9 @@ def stats_to_df(username):
     return very_final_df
 
 
-def run_stats():
+def run_stats(username):
     # initalize account
-    active_account = Summoner(input("Account Name: "))
+    active_account = Summoner(username)
     active_history = active_account.get_history()
 
     # initialize counters (will clean this up)
@@ -496,4 +495,4 @@ def run_stats():
 
 
 # run_stats()
-stats_to_df("Joeee Biden")
+stats_to_df(input("Enter Account Name: "))
