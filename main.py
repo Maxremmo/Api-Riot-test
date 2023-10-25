@@ -192,228 +192,244 @@ class Game:
 # current_game = active_account.get_match(active_history[0])
 
 
-def stats_to_df(username):
-    list_dfs = []
-    # initalize account
-    active_account = Summoner(username)
-    active_history = active_account.get_history()
-
-    for i in range(len(active_history)):
-        current_game = active_account.get_match(active_history[i])
-        participant_index = active_account.get_participant_index(current_game)
-        active_game = Game(current_game)
-        active_game.set_partindex(participant_index)
-        df = current_game["info"]["participants"][participant_index]
-        df["gameStartTimestamp"] = dt.datetime.fromtimestamp(
-            (current_game["info"]["gameStartTimestamp"] / 1000)
-        )
-        df["gameEndTimestamp"] = dt.datetime.fromtimestamp(
-            (current_game["info"]["gameEndTimestamp"] / 1000)
-        )
-        df["game_id"] = current_game["metadata"]["matchId"]
-        df_file = pd.json_normalize(df)
-        list_dfs.append(df_file)
-
-    my_df = pd.concat(list_dfs)
-    the_df = my_df.copy()
-    final_df = the_df[
-        [
-            "game_id",
-            "allInPings",
-            "assistMePings",
-            "assists",
-            "baitPings",
-            "baronKills",
-            "champExperience",
-            "champLevel",
-            "championName",
-            "damageDealtToObjectives",
-            "damageDealtToTurrets",
-            "damageSelfMitigated",
-            "deaths",
-            "doubleKills",
-            "dragonKills",
-            "firstBloodAssist",
-            "firstBloodKill",
-            "gameEndedInSurrender",
-            "goldEarned",
-            "goldSpent",
-            "individualPosition",
-            "item0",
-            "item1",
-            "item2",
-            "item3",
-            "item4",
-            "item5",
-            "item6",
-            "itemsPurchased",
-            "killingSprees",
-            "kills",
-            "lane",
-            "largestKillingSpree",
-            "largestMultiKill",
-            "longestTimeSpentLiving",
-            "magicDamageDealt",
-            "magicDamageDealtToChampions",
-            "magicDamageTaken",
-            "needVisionPings",
-            "neutralMinionsKilled",
-            "nexusKills",
-            "nexusLost",
-            "nexusTakedowns",
-            "objectivesStolen",
-            "participantId",
-            "pentaKills",
-            "physicalDamageDealt",
-            "physicalDamageDealtToChampions",
-            "physicalDamageTaken",
-            "quadraKills",
-            "spell1Casts",
-            "spell2Casts",
-            "spell3Casts",
-            "spell4Casts",
-            "summoner1Casts",
-            "summoner1Id",
-            "summoner2Casts",
-            "summoner2Id",
-            "summonerId",
-            "summonerLevel",
-            "summonerName",
-            "teamEarlySurrendered",
-            "teamId",
-            "teamPosition",
-            "timeCCingOthers",
-            "timePlayed",
-            "totalAllyJungleMinionsKilled",
-            "totalDamageDealt",
-            "totalDamageDealtToChampions",
-            "totalDamageShieldedOnTeammates",
-            "totalDamageTaken",
-            "totalEnemyJungleMinionsKilled",
-            "totalHeal",
-            "totalHealsOnTeammates",
-            "totalMinionsKilled",
-            "totalTimeCCDealt",
-            "totalTimeSpentDead",
-            "totalUnitsHealed",
-            "tripleKills",
-            "trueDamageDealt",
-            "trueDamageDealtToChampions",
-            "trueDamageTaken",
-            "turretKills",
-            "turretTakedowns",
-            "turretsLost",
-            "unrealKills",
-            "visionClearedPings",
-            "visionScore",
-            "visionWardsBoughtInGame",
-            "wardsKilled",
-            "wardsPlaced",
-            "win",
-            "gameStartTimestamp",
-            "gameEndTimestamp",
-            "challenges.abilityUses",
-            "challenges.acesBefore15Minutes",
-            "challenges.alliedJungleMonsterKills",
-            "challenges.baronTakedowns",
-            "challenges.bountyGold",
-            "challenges.buffsStolen",
-            "challenges.completeSupportQuestInTime",
-            "challenges.controlWardsPlaced",
-            "challenges.damagePerMinute",
-            "challenges.damageTakenOnTeamPercentage",
-            "challenges.dancedWithRiftHerald",
-            "challenges.deathsByEnemyChamps",
-            "challenges.dodgeSkillShotsSmallWindow",
-            "challenges.doubleAces",
-            "challenges.dragonTakedowns",
-            "challenges.earlyLaningPhaseGoldExpAdvantage",
-            "challenges.elderDragonKillsWithOpposingSoul",
-            "challenges.elderDragonMultikills",
-            "challenges.enemyChampionImmobilizations",
-            "challenges.enemyJungleMonsterKills",
-            "challenges.epicMonsterKillsNearEnemyJungler",
-            "challenges.epicMonsterKillsWithin30SecondsOfSpawn",
-            "challenges.epicMonsterSteals",
-            "challenges.epicMonsterStolenWithoutSmite",
-            "challenges.firstTurretKilled",
-            "challenges.firstTurretKilledTime",
-            "challenges.flawlessAces",
-            "challenges.fullTeamTakedown",
-            "challenges.gameLength",
-            "challenges.goldPerMinute",
-            "challenges.hadOpenNexus",
-            "challenges.highestWardKills",
-            "challenges.immobilizeAndKillWithAlly",
-            "challenges.initialBuffCount",
-            "challenges.initialCrabCount",
-            "challenges.jungleCsBefore10Minutes",
-            "challenges.kTurretsDestroyedBeforePlatesFall",
-            "challenges.kda",
-            "challenges.killAfterHiddenWithAlly",
-            "challenges.killParticipation",
-            "challenges.killedChampTookFullTeamDamageSurvived",
-            "challenges.killsNearEnemyTurret",
-            "challenges.killsOnOtherLanesEarlyJungleAsLaner",
-            "challenges.killsUnderOwnTurret",
-            "challenges.killsWithHelpFromEpicMonster",
-            "challenges.knockEnemyIntoTeamAndKill",
-            "challenges.landSkillShotsEarlyGame",
-            "challenges.laneMinionsFirst10Minutes",
-            "challenges.laningPhaseGoldExpAdvantage",
-            "challenges.legendaryCount",
-            "challenges.lostAnInhibitor",
-            "challenges.maxLevelLeadLaneOpponent",
-            "challenges.mejaisFullStackInTime",
-            "challenges.moreEnemyJungleThanOpponent",
-            "challenges.multikills",
-            "challenges.multikillsAfterAggressiveFlash",
-            "challenges.outerTurretExecutesBefore10Minutes",
-            "challenges.outnumberedKills",
-            "challenges.outnumberedNexusKill",
-            "challenges.perfectGame",
-            "challenges.pickKillWithAlly",
-            "challenges.playedChampSelectPosition",
-            "challenges.quickCleanse",
-            "challenges.quickFirstTurret",
-            "challenges.quickSoloKills",
-            "challenges.riftHeraldTakedowns",
-            "challenges.saveAllyFromDeath",
-            "challenges.scuttleCrabKills",
-            "challenges.skillshotsDodged",
-            "challenges.skillshotsHit",
-            "challenges.snowballsHit",
-            "challenges.soloBaronKills",
-            "challenges.soloKills",
-            "challenges.stealthWardsPlaced",
-            "challenges.survivedSingleDigitHpCount",
-            "challenges.survivedThreeImmobilizesInFight",
-            "challenges.takedownOnFirstTurret",
-            "challenges.takedowns",
-            "challenges.takedownsFirstXMinutes",
-            "challenges.takedownsInEnemyFountain",
-            "challenges.teamBaronKills",
-            "challenges.teamDamagePercentage",
-            "challenges.teamElderDragonKills",
-            "challenges.teamRiftHeraldKills",
-            "challenges.tookLargeDamageSurvived",
-            "challenges.turretPlatesTaken",
-            "challenges.turretsTakenWithRiftHerald",
-            "challenges.visionScorePerMinute",
-            "challenges.wardTakedowns",
-        ]
+def stats_to_df(
+    usernames=[
+        "GOD EZREAL",
+        "Borrzz",
+        "TPancakeBoy",
+        "Hakuuna",
+        "bad name",
+        "Greystonup",
+        "jennerkris",
+        "Winie puh",
     ]
-    final_df["timePlayed"] = round((final_df["timePlayed"] / 60), 2)
-    final_df["teamId"] = final_df["teamId"].apply(
-        lambda x: "Blue" if x == 100 else "Red"
-    )
-    current_time = dt.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-    final_df.columns = final_df.columns.str.replace("challenges.", "")
+):
+    for name in usernames:
+        try:
+            # initalize accounts
+            active_account = Summoner(name)
+            active_history = active_account.get_history()
 
-    very_final_df = final_df.set_index("game_id")
-    save_name = f"data/last20/last20games_{username}_{current_time}.csv"
-    very_final_df.to_csv(save_name)
-    return very_final_df
+            list_dfs = []
+            for i in range(len(active_history)):
+                current_game = active_account.get_match(active_history[i])
+                participant_index = active_account.get_participant_index(current_game)
+                active_game = Game(current_game)
+                active_game.set_partindex(participant_index)
+                df = current_game["info"]["participants"][participant_index]
+                df["game_id"] = current_game["metadata"]["matchId"]
+                df["gameStartTimestamp"] = current_game["info"]["gameStartTimestamp"]
+                df["gameEndTimestamp"] = current_game["info"]["gameEndTimestamp"]
+                df_file = pd.json_normalize(df)
+                list_dfs.append(df_file)
+
+            my_df = pd.concat(list_dfs)
+            the_df = my_df.copy()
+            final_df = the_df[
+                [
+                    "game_id",
+                    "allInPings",
+                    "assistMePings",
+                    "assists",
+                    "baitPings",
+                    "baronKills",
+                    "champExperience",
+                    "champLevel",
+                    "championName",
+                    "damageDealtToObjectives",
+                    "damageDealtToTurrets",
+                    "damageSelfMitigated",
+                    "deaths",
+                    "doubleKills",
+                    "dragonKills",
+                    "firstBloodAssist",
+                    "firstBloodKill",
+                    "gameEndedInSurrender",
+                    "goldEarned",
+                    "goldSpent",
+                    "individualPosition",
+                    "item0",
+                    "item1",
+                    "item2",
+                    "item3",
+                    "item4",
+                    "item5",
+                    "item6",
+                    "itemsPurchased",
+                    "killingSprees",
+                    "kills",
+                    "lane",
+                    "largestKillingSpree",
+                    "largestMultiKill",
+                    "longestTimeSpentLiving",
+                    "magicDamageDealt",
+                    "magicDamageDealtToChampions",
+                    "magicDamageTaken",
+                    "needVisionPings",
+                    "neutralMinionsKilled",
+                    "nexusKills",
+                    "nexusLost",
+                    "nexusTakedowns",
+                    "objectivesStolen",
+                    "participantId",
+                    "pentaKills",
+                    "physicalDamageDealt",
+                    "physicalDamageDealtToChampions",
+                    "physicalDamageTaken",
+                    "quadraKills",
+                    "spell1Casts",
+                    "spell2Casts",
+                    "spell3Casts",
+                    "spell4Casts",
+                    "summoner1Casts",
+                    "summoner1Id",
+                    "summoner2Casts",
+                    "summoner2Id",
+                    "summonerId",
+                    "summonerLevel",
+                    "summonerName",
+                    "teamEarlySurrendered",
+                    "teamId",
+                    "teamPosition",
+                    "timeCCingOthers",
+                    "timePlayed",
+                    "totalAllyJungleMinionsKilled",
+                    "totalDamageDealt",
+                    "totalDamageDealtToChampions",
+                    "totalDamageShieldedOnTeammates",
+                    "totalDamageTaken",
+                    "totalEnemyJungleMinionsKilled",
+                    "totalHeal",
+                    "totalHealsOnTeammates",
+                    "totalMinionsKilled",
+                    "totalTimeCCDealt",
+                    "totalTimeSpentDead",
+                    "totalUnitsHealed",
+                    "tripleKills",
+                    "trueDamageDealt",
+                    "trueDamageDealtToChampions",
+                    "trueDamageTaken",
+                    "turretKills",
+                    "turretTakedowns",
+                    "turretsLost",
+                    "unrealKills",
+                    "visionClearedPings",
+                    "visionScore",
+                    "visionWardsBoughtInGame",
+                    "wardsKilled",
+                    "wardsPlaced",
+                    "win",
+                    "gameStartTimestamp",
+                    "gameEndTimestamp",
+                    "challenges.abilityUses",
+                    "challenges.acesBefore15Minutes",
+                    "challenges.alliedJungleMonsterKills",
+                    "challenges.baronTakedowns",
+                    "challenges.bountyGold",
+                    "challenges.buffsStolen",
+                    "challenges.completeSupportQuestInTime",
+                    "challenges.controlWardsPlaced",
+                    "challenges.damagePerMinute",
+                    "challenges.damageTakenOnTeamPercentage",
+                    "challenges.dancedWithRiftHerald",
+                    "challenges.deathsByEnemyChamps",
+                    "challenges.dodgeSkillShotsSmallWindow",
+                    "challenges.doubleAces",
+                    "challenges.dragonTakedowns",
+                    "challenges.earlyLaningPhaseGoldExpAdvantage",
+                    "challenges.elderDragonKillsWithOpposingSoul",
+                    "challenges.elderDragonMultikills",
+                    "challenges.enemyChampionImmobilizations",
+                    "challenges.enemyJungleMonsterKills",
+                    "challenges.epicMonsterKillsNearEnemyJungler",
+                    "challenges.epicMonsterKillsWithin30SecondsOfSpawn",
+                    "challenges.epicMonsterSteals",
+                    "challenges.epicMonsterStolenWithoutSmite",
+                    "challenges.firstTurretKilled",
+                    "challenges.firstTurretKilledTime",
+                    "challenges.flawlessAces",
+                    "challenges.fullTeamTakedown",
+                    "challenges.gameLength",
+                    "challenges.goldPerMinute",
+                    "challenges.hadOpenNexus",
+                    "challenges.immobilizeAndKillWithAlly",
+                    "challenges.initialBuffCount",
+                    "challenges.initialCrabCount",
+                    "challenges.jungleCsBefore10Minutes",
+                    "challenges.kTurretsDestroyedBeforePlatesFall",
+                    "challenges.kda",
+                    "challenges.killAfterHiddenWithAlly",
+                    "challenges.killParticipation",
+                    "challenges.killedChampTookFullTeamDamageSurvived",
+                    "challenges.killsNearEnemyTurret",
+                    "challenges.killsUnderOwnTurret",
+                    "challenges.killsWithHelpFromEpicMonster",
+                    "challenges.knockEnemyIntoTeamAndKill",
+                    "challenges.landSkillShotsEarlyGame",
+                    "challenges.laneMinionsFirst10Minutes",
+                    "challenges.laningPhaseGoldExpAdvantage",
+                    "challenges.legendaryCount",
+                    "challenges.lostAnInhibitor",
+                    "challenges.maxLevelLeadLaneOpponent",
+                    "challenges.mejaisFullStackInTime",
+                    "challenges.moreEnemyJungleThanOpponent",
+                    "challenges.multikills",
+                    "challenges.multikillsAfterAggressiveFlash",
+                    "challenges.outerTurretExecutesBefore10Minutes",
+                    "challenges.outnumberedKills",
+                    "challenges.outnumberedNexusKill",
+                    "challenges.perfectGame",
+                    "challenges.pickKillWithAlly",
+                    "challenges.quickCleanse",
+                    "challenges.quickFirstTurret",
+                    "challenges.quickSoloKills",
+                    "challenges.riftHeraldTakedowns",
+                    "challenges.saveAllyFromDeath",
+                    "challenges.scuttleCrabKills",
+                    "challenges.skillshotsDodged",
+                    "challenges.skillshotsHit",
+                    "challenges.snowballsHit",
+                    "challenges.soloBaronKills",
+                    "challenges.soloKills",
+                    "challenges.stealthWardsPlaced",
+                    "challenges.survivedSingleDigitHpCount",
+                    "challenges.survivedThreeImmobilizesInFight",
+                    "challenges.takedownOnFirstTurret",
+                    "challenges.takedowns",
+                    "challenges.takedownsFirstXMinutes",
+                    "challenges.takedownsInEnemyFountain",
+                    "challenges.teamBaronKills",
+                    "challenges.teamDamagePercentage",
+                    "challenges.teamElderDragonKills",
+                    "challenges.teamRiftHeraldKills",
+                    "challenges.tookLargeDamageSurvived",
+                    "challenges.turretPlatesTaken",
+                    "challenges.turretsTakenWithRiftHerald",
+                    "challenges.visionScorePerMinute",
+                    "challenges.wardTakedowns",
+                ]
+            ]
+            if name != usernames[-1]:
+                time.sleep(30)
+
+            save_name = f"/Users/maxremme/Desktop/Programming/Code_Academy/league_etl/data/raw_data/games.csv"
+
+            try:
+                existing_df = pd.read_csv(save_name)
+                # Concatenate the existing data with the new data
+                final_df = pd.concat([existing_df, final_df])
+            except FileNotFoundError:
+                # If the file doesn't exist, no need to concatenate, just use very_final_df
+                pass
+
+            final_df.to_csv(save_name, index=False)
+
+        except Exception as e:
+            print(f"An error occurred for {name}: {e}")
+            print(f"Skipping {name}")
+
+            # Skip to the next user if an error occurs
+            continue
 
 
 def run_stats(username):
@@ -495,4 +511,4 @@ def run_stats(username):
 
 
 # run_stats()
-stats_to_df(input("Enter Account Name: "))
+stats_to_df()
