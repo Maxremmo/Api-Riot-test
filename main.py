@@ -45,16 +45,10 @@ class Summoner:
         resp = requests.get(api_url)
         account_info = resp.json()
         summoner_id = account_info["id"]
-
         return summoner_id
 
     def live_game(self):
-        api_url = (
-            "https://euw1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/"
-            + self.summoner_id
-            + "?api_key="
-            + self.api_key
-        )
+        api_url = f"https://euw1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/{self.summoner_id}?apikey={self.api_key}"
         resp = requests.get(api_url)
         live_game = resp.json()
 
@@ -63,12 +57,7 @@ class Summoner:
     def get_match(self, match_iD):
         """Returns  information about one individual match, input is a matchID"""
 
-        my_url = (
-            "https://europe.api.riotgames.com/lol/match/v5/matches/"
-            + match_iD
-            + "?api_key="
-            + self.api_key
-        )
+        my_url = f"https://europe.api.riotgames.com/lol/match/v5/matches/{match_iD}?api_key={self.api_key}"
 
         match_request = requests.get(my_url)
         match_facts = match_request.json()
@@ -78,13 +67,7 @@ class Summoner:
     def get_history(self):
         """Returns history of chosen amount of matches"""
 
-        history_url = (
-            "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/"
-            + self.puuid
-            + "/ids?start=0&count=20"
-            + "&api_key="
-            + self.api_key
-        )
+        history_url = f"https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{self.puuid}/ids?start=0&count=20&api_key={self.api_key}"
 
         history_request = requests.get(history_url)
         match_history = history_request.json()
@@ -410,9 +393,9 @@ def stats_to_df(
                 ]
             ]
             if name != usernames[-1]:
-                time.sleep(30)
+                time.sleep(1)
 
-            save_name = f"/Users/maxremme/Desktop/Programming/Code_Academy/league_etl/data/raw_data/games.csv"
+            save_name = f"data/games.csv"
 
             try:
                 existing_df = pd.read_csv(save_name)
